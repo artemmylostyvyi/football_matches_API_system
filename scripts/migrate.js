@@ -48,6 +48,15 @@ const createTables = async ()=>{
         coach_id INT REFERENCES users(id) ON DELETE SET NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
+
+      CREATE TABLE IF NOT EXISTS applications (
+        id SERIAL PRIMARY KEY,
+        tournament_id INT REFERENCES tournaments(id) ON DELETE CASCADE,
+        team_id INT REFERENCES teams(id) ON DELETE CASCADE,
+        status application_status DEFAULT 'pending',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(tournament_id, team_id)
+      );
           `);
         console.log('Migration completed successfully!');
         process.exit(0);
