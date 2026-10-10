@@ -41,7 +41,6 @@ const createTables = async ()=>{
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
           `);
-        
         console.log('Migration completed successfully!');
         process.exit(0);
     } 
