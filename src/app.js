@@ -6,7 +6,7 @@ require("dotenv").config();
 // Routes
 const tournamentRoutes = require('./routes/tournamentRoutes');
 const authRoutes = require('./routes/authRoutes');
-
+const teamRoutes = require('./routes/teamRoutes');
 
 const app = express(); // create server object
 const PORT = process.env.PORT || 5000;
@@ -18,6 +18,7 @@ app.use(express.json()); // for convertion body in http method, JSON to JS objec
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tournaments', tournamentRoutes);
+app.use('/api/v1/teams', teamRoutes);
 
 // Health check db connection
 app.get("/api/health", async (req, res)=>{
