@@ -57,6 +57,18 @@ const createTables = async ()=>{
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         UNIQUE(tournament_id, team_id)
       );
+
+      CREATE TABLE IF NOT EXISTS matches (
+        id SERIAL PRIMARY KEY,
+        tournament_id INT REFERENCES tournaments(id) ON DELETE CASCADE,
+        home_team_id INT REFERENCES teams(id) ON DELETE CASCADE,
+        away_team_id INT REFERENCES teams(id) ON DELETE CASCADE,
+        match_date TIMESTAMP WITH TIME ZONE,
+        status match_status DEFAULT 'scheduled',
+        home_score INT DEFAULT 0,
+        away_score INT DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      );
           `);
         console.log('Migration completed successfully!');
         process.exit(0);

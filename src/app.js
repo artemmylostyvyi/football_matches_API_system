@@ -8,6 +8,7 @@ const tournamentRoutes = require('./routes/tournamentRoutes');
 const authRoutes = require('./routes/authRoutes');
 const teamRoutes = require('./routes/teamRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
+const matchRoutes = require('./routes/matchRoutes');
 
 const app = express(); // create server object
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tournaments', tournamentRoutes);
 app.use('/api/v1/teams', teamRoutes);
 app.use('/api/v1/applications', applicationRoutes);
+app.use('/api/v1/matches', matchRoutes);
 
 // Health check db connection
 app.get("/api/health", async (req, res)=>{
