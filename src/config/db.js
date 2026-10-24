@@ -13,7 +13,7 @@ pool.on('connect', ()=>{
     console.log("Successfully connected to PostgreSQL");
 }); // Listening to connect confirming from DB
 
-pool.on('error', ()=>{
+pool.on('error', (err)=>{
     console.error('Unexpected error on idle client', err);
     process.exit(-1); // for stoping node js proccess immeadiately
 }); // Listening to error from DB if connection failed

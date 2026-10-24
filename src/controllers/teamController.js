@@ -5,7 +5,7 @@ class TeamController {
     try {
       const teamData = {
         ...req.body,
-        coach_id: req.user.id,
+        coach_id: req.user.userId,
       };
 
       const newTeam = await TeamService.createTeam(teamData);

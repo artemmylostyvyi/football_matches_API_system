@@ -65,3 +65,4 @@ No automated tests exist, so verify manually:
 - Auth flow: `POST /api/v1/auth/register` → `POST /api/v1/auth/login` → send `data.token` as `Authorization: Bearer <token>` on protected routes.
 
 Planned: React frontend later, not started. Don't create it unless asked.
+

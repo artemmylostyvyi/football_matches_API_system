@@ -5,7 +5,7 @@ class TournamentController {
     try {
       const tournamentData = {
         ...req.body,
-        created_by: req.user.id,
+        created_by: req.user.userId,
       };
 
       const newTournament = await TournamentService.createTournament(tournamentData);

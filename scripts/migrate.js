@@ -38,6 +38,7 @@ const createTables = async ()=>{
         description TEXT,
         start_date DATE,
         end_date DATE,
+        created_by INT REFERENCES users(id) ON DELETE SET NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
 
@@ -69,7 +70,14 @@ const createTables = async ()=>{
         away_score INT DEFAULT 0,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
-          `);
+      `);
+
+        // Add columns missing in databases created before this migration
+      await db.query(`
+        ALTER TABLE tournaments
+        ADD COLUMN IF NOT EXISTS created_by INT REFERENCES users(id) ON DELETE SET NULL;
+      `);
+
         console.log('Migration completed successfully!');
         process.exit(0);
     } 
