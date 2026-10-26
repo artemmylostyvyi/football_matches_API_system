@@ -1,9 +1,9 @@
-const db = require("../src/config/db");
+import db from '../src/config/db';
 
-const createTables = async ()=>{
-    try{
-        // Create special data types
-      await db.query(`
+const createTables = async (): Promise<void> => {
+  try {
+    // Create special data types
+    await db.query(`
       DO $$ BEGIN
         CREATE TYPE user_role AS ENUM ('admin', 'coach', 'fan');
       EXCEPTION
@@ -21,9 +21,10 @@ const createTables = async ()=>{
       EXCEPTION
         WHEN duplicate_object THEN null;
       END $$;
-            `);
-        // Create tables
-      await db.query(`
+    `);
+
+    // Create tables
+    await db.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         email VARCHAR(255) UNIQUE NOT NULL,
@@ -70,21 +71,20 @@ const createTables = async ()=>{
         away_score INT DEFAULT 0,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
-      `);
+    `);
 
-        // Add columns missing in databases created before this migration
-      await db.query(`
-        ALTER TABLE tournaments
-        ADD COLUMN IF NOT EXISTS created_by INT REFERENCES users(id) ON DELETE SET NULL;
-      `);
+    // Add columns missing in databases created before this migration
+    await db.query(`
+      ALTER TABLE tournaments
+      ADD COLUMN IF NOT EXISTS created_by INT REFERENCES users(id) ON DELETE SET NULL;
+    `);
 
-        console.log('Migration completed successfully!');
-        process.exit(0);
-    } 
-    catch(error){
-        console.error('Migration failed:', err);
-        process.exit(1);
-    }
+    console.log('Migration completed successfully!');
+    process.exit(0);
+  } catch (error: unknown) {
+    console.error('Migration failed:', error);
+    process.exit(1);
+  }
 };
 
 createTables();

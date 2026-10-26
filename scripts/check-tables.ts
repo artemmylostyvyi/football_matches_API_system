@@ -1,8 +1,8 @@
-const db = require('../src/config/db');
+import db from '../src/config/db';
 
-const checkTables = async () => {
+const checkTables = async (): Promise<void> => {
   try {
-    const res = await db.query(`
+    const res = await db.query<{ table_name: string }>(`
       SELECT table_name 
       FROM information_schema.tables 
       WHERE table_schema = 'public';
@@ -16,8 +16,9 @@ const checkTables = async () => {
       res.rows.forEach((row) => console.log(` - ${row.table_name}`));
     }
     process.exit(0);
-  } catch (err) {
-    console.error('Помилка підключення до бази:', err.message);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('Помилка підключення до бази:', message);
     process.exit(1);
   }
 };
