@@ -1,4 +1,3 @@
-// src/config/db.ts
 import { Pool, QueryResult, QueryResultRow } from 'pg';
 import { env } from './env';
 

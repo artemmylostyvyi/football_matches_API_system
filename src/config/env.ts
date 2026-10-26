@@ -1,6 +1,4 @@
-// src/config/env.ts
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 function getRequiredEnv(key: string): string {
