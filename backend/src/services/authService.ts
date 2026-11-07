@@ -57,7 +57,17 @@ const login = async (
   };
 };
 
+// Current user (for restoring the session on the client after reload)
+const getCurrentUser = async (userId: number): Promise<SafeUser> => {
+  const user = await userModel.findById(userId);
+  if (!user) {
+    throw new HttpError('Користувача не знайдено', 404);
+  }
+  return user;
+};
+
 export default {
   register,
   login,
+  getCurrentUser,
 };
