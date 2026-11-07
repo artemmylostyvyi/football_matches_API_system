@@ -88,7 +88,34 @@ const login = async (
   }
 };
 
+const me = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = await authService.getCurrentUser(req.user!.userId);
+
+    res.status(200).json({
+      status: 'success',
+      data: { user },
+    });
+    return;
+  } catch (error: unknown) {
+    if (error instanceof HttpError) {
+      res.status(error.statusCode).json({
+        status: 'error',
+        message: error.message,
+      });
+      return;
+    }
+    const message = error instanceof Error ? error.message : 'Внутрішня помилка сервера';
+    res.status(500).json({
+      status: 'error',
+      message,
+    });
+    return;
+  }
+};
+
 export default {
   register,
   login,
+  me,
 };

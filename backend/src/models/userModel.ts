@@ -9,6 +9,13 @@ export const findUserByEmail = async (email: string): Promise<User | undefined> 
   return rows[0];
 };
 
+// Знаходить безпечну форму користувача за id (без password_hash)
+export const findById = async (id: number): Promise<SafeUser | undefined> => {
+  const query = 'SELECT id, email, role, created_at FROM users WHERE id = $1';
+  const { rows } = await db.query<SafeUser>(query, [id]);
+  return rows[0];
+};
+
 // Створює користувача. RETURNING без password_hash - повертаємо безпечну форму
 export const createUser = async (
   email: string,
@@ -26,5 +33,6 @@ export const createUser = async (
 
 export default {
   findUserByEmail,
+  findById,
   createUser,
 };
