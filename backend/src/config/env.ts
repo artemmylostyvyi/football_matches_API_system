@@ -22,6 +22,7 @@ export const env = {
   port: getRequiredNumberEnv('PORT'),
   jwtSecret: getRequiredEnv('JWT_SECRET'),
   jwtExpiresIn: getRequiredEnv('JWT_EXPIRES_IN'),
+  corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
   db: {
     user: getRequiredEnv('DB_USER'),
     password: getRequiredEnv('DB_PASSWORD'),

@@ -1,6 +1,8 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import db from './config/db';
+import { env } from './config/env';
 import authRoutes from './routes/authRoutes';
 import teamRoutes from './routes/teamRoutes';
 import tournamentRoutes from './routes/tournamentRoutes';
@@ -10,8 +12,15 @@ import matchRoutes from './routes/matchRoutes';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = env.port;
 
+const allowedOrigins = env.corsOrigin.split(',').map((origin) => origin.trim());
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+  }),
+);
 app.use(express.json());
 
 app.get('/', (req, res) => {
