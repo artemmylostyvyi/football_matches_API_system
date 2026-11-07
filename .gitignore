@@ -1,3 +1,5 @@
 node_modules
 .env
 dist
+frontend/.env.local
+frontend/.env.*.local
